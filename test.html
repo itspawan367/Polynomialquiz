@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 8 Polynomials MCQ Test</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        h2 {
+            color: #3498db;
+            margin: 20px 0 10px 0;
+        }
+        
+        .step {
+            display: none;
+            padding: 15px;
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+            width: 200px;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+        }
+        
+        .question-box {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+            border-radius: 5px;
+        }
+        
+        .question-number {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .option {
+            background: white;
+            padding: 10px;
+            margin: 8px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option:hover {
+            background: #f1f8ff;
+            border-color: #3498db;
+        }
+        
+        .selected {
+            background: #3498db;
+            color: white;
+            border-color: #2980b9;
+        }
+        
+        .timer {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin: 10px 0;
+            padding: 10px;
+            background: #fff3cd;
+            border-radius: 5px;
+        }
+        
+        .result-box {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .score {
+            font-size: 48px;
+            color: #2ecc71;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .answer-review {
+            text-align: left;
+            margin-top: 30px;
+        }
+        
+        .review-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        
+        .correct {
+            border-left: 4px solid #2ecc71;
+        }
+        
+        .incorrect {
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .explanation {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #ddd;
+        }
+        
+        .progress {
+            height: 10px;
+            background: #ecf0f1;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: #3498db;
+            width: 0%;
+            transition: width 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Polynomials MCQ Test - Class 8</h1>
+        
+        <!-- Progress Bar -->
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <!-- Step 1: Name Entry -->
+        <div class="step active" id="step1">
+            <h2>Enter Your Name</h2>
+            <input type="text" id="studentName" class="input-field" placeholder="Enter your full name">
+            <button class="btn" onclick="startTest()">Start Test</button>
+        </div>
+        
+        <!-- Step 2: Test Questions -->
+        <div class="step" id="step2">
+            <div class="timer" id="timer">Time Left: 15:00</div>
+            <div id="questionsContainer"></div>
+            <button class="btn" onclick="submitTest()">Submit Test</button>
+        </div>
+        
+        <!-- Step 3: Results -->
+        <div class="step" id="step3">
+            <div class="result-box">
+                <h2>Test Results</h2>
+                <div class="score" id="scoreDisplay">0/10</div>
+                <h3 id="resultMessage"></h3>
+                <div class="answer-review" id="answersReview"></div>
+                <button class="btn" onclick="retakeTest()">Take Test Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Questions Data
+        const questions = [
+            {
+                id: 1,
+                question: "What is the degree of the polynomial 3x⁴ + 5x² - 2x + 7?",
+                options: ["2", "3", "4", "5"],
+                correct: 2,
+                explanation: "The degree is the highest power of the variable. Here, the highest power is 4 (from x⁴)."
+            },
+            {
+                id: 2,
+                question: "Which of the following is a binomial?",
+                options: ["3x²", "x² + 2x + 1", "4x³ + 2x", "5"],
+                correct: 2,
+                explanation: "A binomial has exactly two terms. 4x³ + 2x has two terms, so it's a binomial."
+            },
+            {
+                id: 3,
+                question: "What is the coefficient of x in the polynomial 5x³ - 2x² + 3x - 7?",
+                options: ["5", "-2", "3", "-7"],
+                correct: 2,
+                explanation: "The coefficient is the number multiplied with the variable. For x, it's 3."
+            },
+            {
+                id: 4,
+                question: "If p(x) = x² - 3x + 2, what is p(1)?",
+                options: ["0", "1", "2", "-1"],
+                correct: 0,
+                explanation: "p(1) = (1)² - 3(1) + 2 = 1 - 3 + 2 = 0"
+            },
+            {
+                id: 5,
+                question: "What is the zero of the polynomial 2x - 6?",
+                options: ["2", "3", "-3", "6"],
+                correct: 1,
+                explanation: "Set 2x - 6 = 0 → 2x = 6 → x = 3"
+            },
+            {
+                id: 6,
+                question: "Which of these is NOT a polynomial?",
+                options: ["√2x + 1", "x² + 3/x", "5", "x/3 + 2"],
+                correct: 1,
+                explanation: "3/x = 3x⁻¹, which has a negative exponent. Polynomials cannot have negative exponents."
+            },
+            {
+                id: 7,
+                question: "What is the sum of (3x² + 2x - 5) and (x² - 3x + 4)?",
+                options: ["4x² - x - 1", "3x² + 5x - 9", "4x² + 5x - 1", "4x² - 5x + 1"],
+                correct: 0,
+                explanation: "(3x² + x²) + (2x - 3x) + (-5 + 4) = 4x² - x - 1"
+            },
+            {
+                id: 8,
+                question: "The polynomial (x² - 5x + 6) is a:",
+                options: ["Monomial", "Binomial", "Trinomial", "None of these"],
+                correct: 2,
+                explanation: "It has three terms: x², -5x, and +6, so it's a trinomial."
+            },
+            {
+                id: 9,
+                question: "If x + 1 is a factor of x³ + 2x² + x + k, what is k?",
+                options: ["-2", "0", "2", "1"],
+                correct: 1,
+                explanation: "If (x+1) is factor, then p(-1)=0. So (-1)³+2(-1)²+(-1)+k=0 → -1+2-1+k=0 → k=0"
+            },
+            {
+                id: 10,
+                question: "What is (x+2)(x-3)?",
+                options: ["x² - x - 6", "x² + x - 6", "x² - 5x + 6", "x² + 5x - 6"],
+                correct: 0,
+                explanation: "(x+2)(x-3) = x(x-3) + 2(x-3) = x² - 3x + 2x - 6 = x² - x - 6"
+            }
+        ];
+
+        // Variables
+        let currentStep = 1;
+        let studentName = "";
+        let userAnswers = new Array(questions.length).fill(null);
+        let timeLeft = 900; // 15 minutes in seconds
+        let timerInterval;
+
+        // Functions
+        function startTest() {
+            const nameInput = document.getElementById('studentName');
+            if (!nameInput.value.trim()) {
+                alert("Please enter your name!");
+                return;
+            }
+            
+            studentName = nameInput.value.trim();
+            currentStep = 2;
+            updateProgress();
+            
+            // Switch to test screen
+            document.getElementById('step1').classList.remove('active');
+            document.getElementById('step2').classList.add('active');
+            
+            // Display questions
+            displayQuestions();
+            
+            // Start timer
+            startTimer();
+        }
+
+        function displayQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            questions.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question-box">
+                        <div class="question-number">Q${index + 1}:</div>
+                        <div class="question-text">${q.question}</div>
+                        <div class="options-container">
+                            ${q.options.map((option, optIndex) => `
+                                <div class="option" onclick="selectAnswer(${index}, ${optIndex})" 
+                                     id="q${index}opt${optIndex}">
+                                    ${String.fromCharCode(65 + optIndex)}) ${option}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += questionHTML;
+            });
+            
+            // Load any previously selected answers
+            loadSelectedAnswers();
+        }
+
+        function selectAnswer(qIndex, optIndex) {
+            // Clear previous selection for this question
+            for (let i = 0; i < 4; i++) {
+                const optionElement = document.getElementById(`q${qIndex}opt${i}`);
+                if (optionElement) {
+                    optionElement.classList.remove('selected');
+                }
+            }
+            
+            // Mark new selection
+            const selectedOption = document.getElementById(`q${qIndex}opt${optIndex}`);
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+            }
+            
+            // Save answer
+            userAnswers[qIndex] = optIndex;
+        }
+
+        function loadSelectedAnswers() {
+            userAnswers.forEach((answer, qIndex) => {
+                if (answer !== null) {
+                    const optionElement = document.getElementById(`q${qIndex}opt${answer}`);
+                    if (optionElement) {
+                        optionElement.classList.add('selected');
+                    }
+                }
+            });
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            updateTimerDisplay();
+            
+            timerInterval = setInterval(function() {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitTest();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const timerElement = document.getElementById('timer');
+            timerElement.textContent = `Time Left: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            if (timeLeft < 60) {
+                timerElement.style.color = '#e74c3c';
+                timerElement.style.background = '#f8d7da';
+            }
+        }
+
+        function submitTest() {
+            clearInterval(timerInterval);
+            
+            // Check if all questions answered
+            const unanswered = userAnswers.filter(a => a === null).length;
+            if (unanswered > 0 && !confirm(`You have ${unanswered} unanswered questions. Submit anyway?`)) {
+                startTimer();
+                return;
+            }
+            
+            // Calculate score
+            let score = 0;
+            questions.forEach((q, index) => {
+                if (userAnswers[index] === q.correct) {
+                    score++;
+                }
+            });
+            
+            currentStep = 3;
+            updateProgress();
+            
+            // Switch to results screen
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step3').classList.add('active');
+            
+            // Show results
+            showResults(score);
+        }
+
+        function showResults(score) {
+            // Display score
+            document.getElementById('scoreDisplay').textContent = `${score}/${questions.length}`;
+            
+            // Display message
+            const resultMessage = document.getElementById('resultMessage');
+            const percentage = (score / questions.length) * 100;
+            
+            let message = `Hi ${studentName}, `;
+            if (percentage >= 90) {
+                message += "Excellent! 🎉";
+            } else if (percentage >= 70) {
+                message += "Good job! 👍";
+            } else if (percentage >= 50) {
+                message += "Fair attempt. 📚";
+            } else {
+                message += "Keep practicing! 💪";
+            }
+            message += ` You scored ${score} out of ${questions.length}.`;
+            
+            resultMessage.textContent = message;
+            
+            // Show answer review
+            const reviewContainer = document.getElementById('answersReview');
+            reviewContainer.innerHTML = '<h3>Answer Review:</h3>';
+            
+            questions.forEach((q, index) => {
+                const isCorrect = userAnswers[index] === q.correct;
+                const userAnswerText = userAnswers[index] !== null ? 
+                    `${String.fromCharCode(65 + userAnswers[index])}) ${q.options[userAnswers[index]]}` : 
+                    "Not answered";
+                const correctAnswerText = `${String.fromCharCode(65 + q.correct)}) ${q.options[q.correct]}`;
+                
+                const reviewHTML = `
+                    <div class="review-item ${isCorrect ? 'correct' : 'incorrect'}">
+                        <p><strong>Q${index + 1}:</strong> ${q.question}</p>
+                        <p><strong>Your Answer:</strong> ${userAnswerText}</p>
+                        <p><strong>Correct Answer:</strong> ${correctAnswerText}</p>
+                        <div class="explanation">${q.explanation}</div>
+                    </div>
+                `;
+                
+                reviewContainer.innerHTML += reviewHTML;
+            });
+        }
+
+        function retakeTest() {
+            // Reset everything
+            currentStep = 1;
+            studentName = "";
+            userAnswers = new Array(questions.length).fill(null);
+            timeLeft = 900;
+            
+            // Reset UI
+            document.getElementById('studentName').value = '';
+            document.getElementById('step3').classList.remove('active');
+            document.getElementById('step1').classList.add('active');
+            document.getElementById('timer').style.color = '';
+            document.getElementById('timer').style.background = '';
+            
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progress = ((currentStep - 1) / 2) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Initialize
+        updateProgress();
+        
+        // Make functions available globally
+        window.startTest = startTest;
+        window.selectAnswer = selectAnswer;
+        window.submitTest = submitTest;
+        window.retakeTest = retakeTest;
+    </script>
+</body>
+</html>
